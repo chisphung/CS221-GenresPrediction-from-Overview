@@ -4,7 +4,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import sys
 
 def post_process(probs, k=3, use_threshold=True):
-    probs = probs.numpy()
+    probs = probs.cpu().numpy()
 
     if use_threshold:
         class_thresholds = np.array([

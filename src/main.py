@@ -11,7 +11,7 @@ path = Path("datasets") / "id2genre.json"
 with open(path, "r") as f:
     id2genre = json.load(f)
 
-model_path = r'C:\Users\User\Downloads\NLP\FinalTerm_Project\weights\bert_based_best.pt'
+model_path = r'./weights/bert_based.pt'
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 model, tokenizer = load_model(model_path, device)
 
