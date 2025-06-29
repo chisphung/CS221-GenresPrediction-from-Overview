@@ -23,7 +23,7 @@ This project is a part of the course **Natural Language Processing** at the Univ
 * **Course code:** CS221
 * **Class code:** CS221.P22
 * **Semester:** HK2 (2024 - 2025)
-* **Instructor**: Th.S Nguyễn Trọng Chỉnh
+* **Instructor**: TS Nguyễn Trọng Chỉnh
 
 ## Instruction
 1. Clone the repository:
