@@ -28,8 +28,7 @@ This project is a part of the course **Natural Language Processing** at the Univ
 ## Instruction
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/yourrepository.git
-   ```
+   git clone hhttps://github.com/chisphung/CS221-GenresPrediction-from-Overview
 2. Install dependencies:
    ```bash
    pip install -r requirements.txt
