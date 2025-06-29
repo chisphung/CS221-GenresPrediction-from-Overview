@@ -8,7 +8,9 @@
 <!-- Title -->
 <h1 align="center"><b>Multiclass Movie Genres Classification From Original Movie Overview</b></h1>
 <!-- Main -->
-# Members:
+
+## Members
+This project is a part of the course **Natural Language Processing** at the University of Information Technology
 
 | No            | Student ID    | Full name            | Email                   |
 | ------------- | ------------- | -------------------- | ----------------------- |
