@@ -15,7 +15,7 @@ This project is a part of the course **Natural Language Processing** at the Univ
 | No            | Student ID    | Full name            | Email                   |
 | ------------- | ------------- | -------------------- | ----------------------- |
 | 1             | 23520179      | Phùng Minh Chí       | 23520179@gm.uit.edu.vn  |
-| 2             | 23520183      | Nguyễn Hữu Min Chiến | 23520183@gm.uit.edu.vn  |
+| 2             | 23520183      | Nguyễn Hữu Minh Chiến | 23520183@gm.uit.edu.vn  |
 | 3             | 23521467      | Lê Ngọc Phương Thảo  | 23521467@gm.uit.edu.vn  |
 
 ## Course Information
