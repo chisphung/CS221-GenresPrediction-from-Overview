@@ -39,6 +39,10 @@ To preprocess the dataset, run the following command:
 ```bash
 python tools/preprocess.py 
 ```
+You can also download the preprocessed dataset with the following command:
+```bash
+python tools/download.py
+```
 ### Model training:
 To train the model, run the following command:
 ```bash
@@ -50,6 +54,7 @@ To save your time, we are current support 3 pretrained models:
 - `bert-base-uncased`
 - `distilled-bert-base-uncased`
 - `roberta-base`
+
 You can download them from the following links:
 - [bert-base-uncased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
 - [distilled-bert-base-uncased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
