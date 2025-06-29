@@ -56,7 +56,7 @@ def compute_pos_weight(df_labels: pl.DataFrame) -> torch.Tensor:
     return pos_weight
 
 
-def loss_fn(outputs, targets, pos_weight):
+def loss_fn(outputs, targets, pos_weight=None):
     return torch.nn.BCEWithLogitsLoss(pos_weight = pos_weight.to(device))(outputs, targets)
 
 class CustomDataset(torch.utils.data.Dataset):
@@ -110,7 +110,7 @@ def train_model(training_loader, model, optimizer):
 
         # forward
         outputs = model(ids, mask, token_type_ids) # (batch,predict)=(32,8)
-        loss = loss_fn(outputs, targets, pos_weight=pos_weight)
+        loss = loss_fn(outputs, targets, pos_weight=None)
         losses.append(loss.item())
         # training accuracy, apply sigmoid, round (apply thresh 0.5)
         outputs = torch.sigmoid(outputs).cpu().detach().numpy().round()
