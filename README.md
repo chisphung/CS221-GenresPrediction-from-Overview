@@ -58,6 +58,7 @@ You can download them from the following links:
 - [bert-base-uncased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
 - [distilled-bert-base-uncased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
 - [roberta-base](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
+
 After downloading, you can place them in the `weights` folder.
 ### Prediction:
 To make a single prediction using the trained model, run the following command:
