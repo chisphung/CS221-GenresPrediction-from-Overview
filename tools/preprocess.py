@@ -75,9 +75,10 @@ def preprocess_text(text):
 
 if __name__ == "__main__":
     # Load the dataset
-    dataset = load_dataset("csv", data_files="data/train.csv")
+    # dataset1 = load_dataset('wykonos/movies')
 
-    df = pl.DataFrame(dataset["train"])
+    df = pl.read_csv('hf://datasets/wykonos/movies/movies_dataset.csv')
+    print(len(df['genres']))
     df = df.drop_nulls()
     df = df.select(df.columns[:5])
     df = df.filter(~(pl.col('genres').is_null() | pl.col('overview').is_null()))
