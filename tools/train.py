@@ -236,6 +236,7 @@ if __name__ == "__main__":
 
     history = defaultdict(list)
     best_accuracy = 0
+    save_dir = "../weights/"
 
     for epoch in range(1, EPOCHS+1):
         print(f'Epoch {epoch}/{EPOCHS}')
@@ -250,5 +251,6 @@ if __name__ == "__main__":
         history['val_loss'].append(val_loss)
         # save the best model
         if val_acc > best_accuracy:
-            torch.save(model.state_dict(), os.path.join("/weights/best_model.pt"))
+            os.makedirs(save_dir, exist_ok=True)
+            torch.save(model.state_dict(), os.path.join(save_dir, "best_model.pt"))
             best_accuracy = val_acc
