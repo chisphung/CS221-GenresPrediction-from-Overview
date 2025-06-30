@@ -56,8 +56,8 @@ def compute_pos_weight(df_labels: pl.DataFrame) -> torch.Tensor:
     return pos_weight
 
 
-def loss_fn(outputs, targets, pos_weight=None):
-    return torch.nn.BCEWithLogitsLoss(pos_weight = pos_weight.to(device))(outputs, targets)
+def loss_fn(outputs, targets):
+    return torch.nn.BCEWithLogitsLoss()(outputs, targets)
 
 class CustomDataset(torch.utils.data.Dataset):
     def __init__(self, df, tokenizer, max_len, target_list):
@@ -110,7 +110,7 @@ def train_model(training_loader, model, optimizer):
 
         # forward
         outputs = model(ids, mask, token_type_ids) # (batch,predict)=(32,8)
-        loss = loss_fn(outputs, targets, pos_weight=None)
+        loss = loss_fn(outputs, targets)
         losses.append(loss.item())
         # training accuracy, apply sigmoid, round (apply thresh 0.5)
         outputs = torch.sigmoid(outputs).cpu().detach().numpy().round()
@@ -184,7 +184,7 @@ class BERTClass(torch.nn.Module):
 
 if __name__ == "__main__":
     pretrain_model_name = sys.argv[1]
-    pos_weight = compute_pos_weight(df.select(label_cols))
+    # pos_weight = compute_pos_weight(df.select(label_cols))
     tokenizer = AutoTokenizer.from_pretrained(pretrain_model_name)
 
     train_dataset = CustomDataset(train_df, tokenizer, MAX_LEN, target_list)
