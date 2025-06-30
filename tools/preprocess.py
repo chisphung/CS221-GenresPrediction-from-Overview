@@ -79,7 +79,7 @@ if __name__ == "__main__":
 
     df = pl.read_csv('hf://datasets/wykonos/movies/movies_dataset.csv')
     print(len(df['genres']))
-    df = df.drop_nulls()
+    # df = df.drop_nulls() # Cannot use drop nulls for all columns because there are some unused columns with null values
     df = df.select(df.columns[:5])
     df = df.filter(~(pl.col('genres').is_null() | pl.col('overview').is_null()))
 
@@ -99,11 +99,11 @@ if __name__ == "__main__":
     
     genre_columns = [col for col in df.columns if col not in ['overview', 'id', 'title', 'original_language', 'genres']] # Filter out non-genre columns
     df = df.select(['overview'] + genre_columns)
-
     # Preprocess the overview text
     df_preprocessed = df.with_columns(
-    pl.col('overview').map_elements(preprocess_text).alias('overview')
+    pl.col('overview').map_elements(preprocess_text, return_dtype=str).alias('overview')
     )
+    # print(len(df_preprocessed['overview']))
     df_preprocessed.write_csv("datasets/preprocessed_dataset.csv")
     # Trim the dataset
 
