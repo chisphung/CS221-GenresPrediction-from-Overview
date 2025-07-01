@@ -1,20 +1,21 @@
-from predict import get_predictions
-from data_loader import get_data_loader
-from load_model import load_model
-from postprocess import post_process
+from tools.predict import get_predictions
+from tools.data_loader import get_data_loader
+from tools.load_model import load_model
+from tools.postprocess import post_process
 from sklearn.metrics import f1_score, jaccard_score, hamming_loss, classification_report
 import json
 import torch
 import polars as pl
 
-genres = json.load(open('../datasets/id2genre.json', 'r'))
+genres = json.load(open('./datasets/id2genre.json', 'r'))
 
-def evaluate(model_path, data_path, device="cuda" if torch.cuda.is_available() else "cpu"):
+def evaluate(model_path, df, device="cuda" if torch.cuda.is_available() else "cpu"):
     """
     Evaluate the model on the given data loader.
     """
-    if isinstance(data_path, str):
-        df = pl.read_csv(data_path)
+    print(f"Using device: {device}")
+    if isinstance(df, str):
+        df = pl.read_csv(df)
     model, tokenizer = load_model(model_path, device=device)
     data_loader = get_data_loader(df, tokenizer, target_list=list(genres.values()), max_len=180, batch_size=32, shuffle=False)
     all_predictions = []

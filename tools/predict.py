@@ -3,12 +3,12 @@ import torch
 import numpy as np 
 from transformers import AutoTokenizer, AutoModelForCausalLM
 import sys
-from load_model import load_model
-from data_loader import get_data_loader
+from tools.load_model import load_model
+from tools.data_loader import get_data_loader
 import pandas as pd
 import json 
 
-genres = json.load(open('../datasets/id2genre.json', 'r'))
+genres = json.load(open('./datasets/id2genre.json', 'r'))
 
 def get_predictions(model, data_loader, device="cuda" if torch.cuda.is_available() else "cpu"):
     """
