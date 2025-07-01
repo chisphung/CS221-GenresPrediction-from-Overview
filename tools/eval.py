@@ -7,21 +7,24 @@ import json
 import torch
 import polars as pl
 
-genres = json.load(open('./datasets/id2genre.json', 'r'))
 
-def evaluate(model_path, df, device="cuda" if torch.cuda.is_available() else "cpu"):
+def evaluate(model_path, df, target_list_path, base_model = "bert-base-uncased", device="cuda" if torch.cuda.is_available() else "cpu"):
     """
     Evaluate the model on the given data loader.
     """
     print(f"Using device: {device}")
+    genres = json.load(open(target_list_path, 'r'))
     if isinstance(df, str):
         df = pl.read_csv(df)
-    model, tokenizer = load_model(model_path, device=device)
+    model, tokenizer = load_model(model_path, base_model=base_model, device=device)
     data_loader = get_data_loader(df, tokenizer, target_list=list(genres.values()), max_len=180, batch_size=32, shuffle=False)
     all_predictions = []
     all_targets = []
 
-    titles, predictions, prediction_probs, target_values = get_predictions(model, data_loader, device=device)
+    titles, predictions, prediction_probs, target_values = get_predictions(model, data_loader, target_list_path=target_list_path, device=device)
+    # predictions = post_process(predictions)
+    predictions = post_process(prediction_probs)
+    print("Post-processing completed.")
     test_labels = df.select(list(genres.values())).to_numpy()
     print(classification_report(test_labels, predictions, target_names=list(genres.values())))
 

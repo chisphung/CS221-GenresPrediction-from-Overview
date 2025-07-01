@@ -8,26 +8,27 @@ def post_process(probs, k=3, use_threshold=True):
 
     if use_threshold:
         class_thresholds = np.array([
-            0.5,  # class 0
-            0.3,  # class 1
-            0.5,  # class 2
-            0.5,  # class 3
-            0.5,  # class 4
-            0.5,  # class 5
-            0.3,  # class 6
-            0.4,  # class 7
-            0.3,  # class 8
-            0.5,  # class 9
-            0.3,  # class 10
-            0.4,  # class 11
-            0.5,  # class 12
-            0.3,  # class 13
-            0.5,  # class 14
-            0.5,  # class 15
-            0.4,  # class 16
-            0.5,  # class 17 
-            0.5   # class 18 
+            0.5,  # 0. Comedy
+            0.3,  # 1. Fantasy
+            0.3,  # 2. Crime
+            0.3,  # 3. Family
+            0.5,  # 4. Horror
+            0.3,  # 5. TV Movie
+            0.3,  # 6. Action
+            0.6,  # 7. Animation
+            0.3,  # 8. War
+            0.6,  # 9. Documentary
+            0.6,  # 10. Western
+            0.3,  # 11. History
+            0.3,  # 12. Thriller
+            0.3,  # 13. Mystery
+            0.6,  # 14. Music
+            0.3,  # 15. Romance
+            0.5,  # 16. Drama
+            0.3,  # 17. Adventure
+            0.5   # 18. Science Fiction 
         ])
+
 
         preds = (probs > class_thresholds).astype(int)
 
