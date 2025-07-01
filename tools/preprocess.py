@@ -14,18 +14,12 @@ nltk.download('wordnet')
 nltk.download('averaged_perceptron_tagger')
 nltk.download('averaged_perceptron_tagger_eng')
 
-PUNCT_TO_REMOVE = str(string.punctuation + string.digits)
-html_pattern = re.compile('<.*?>')
-url_pattern = re.compile(r'https?://\S+|www\.\S+')
-emot_obj = emot.emot()
-STOPWORDS = set(stopwords.words('english'))
-lemmatizer = WordNetLemmatizer()
-wordnet_map = {"N":wordnet.NOUN, "V":wordnet.VERB, "J":wordnet.ADJ, "R":wordnet.ADV}
-
 def remove_html(text):
+    html_pattern = re.compile('<.*?>')
     return html_pattern.sub(r' ', text)
 
 def remove_urls(text):
+    url_pattern = re.compile(r'https?://\S+|www\.\S+')
     return url_pattern.sub(r' ', text)
 
 def expand_contractions(text):
@@ -34,6 +28,7 @@ def expand_contractions(text):
 
 def remove_punc_and_num(text):
     """custom function to remove the punctuation"""
+    PUNCT_TO_REMOVE = str(string.punctuation + string.digits)
     for token in PUNCT_TO_REMOVE:
         text = text.replace(token, "")
     return text
@@ -43,6 +38,7 @@ def remove_special_characters(text):
     return text
 
 def handle_emoticons(text, remove_emoticon=True):
+    emot_obj = emot.emot()
     dict_emoticons = dict(zip(emot_obj.emoticons(text)['value'], emot_obj.emoticons(text)['mean']))
     res_emoticons =  dict(sorted(dict_emoticons.items(), key = lambda kv:len(kv[1]), reverse=True))
     for emoticon, mean in res_emoticons.items():
@@ -54,10 +50,13 @@ def handle_emoticons(text, remove_emoticon=True):
 
 def remove_stopwords(text):
     """custom function to remove the stopwords"""
+    STOPWORDS = set(stopwords.words('english'))
     return " ".join([word for word in str(text).split() if word not in STOPWORDS])
 
 
 def lemmatize_words(text):
+    wordnet_map = {"N":wordnet.NOUN, "V":wordnet.VERB, "J":wordnet.ADJ, "R":wordnet.ADV}
+    lemmatizer = WordNetLemmatizer()
     pos_tagged_text = nltk.pos_tag(text.split())
     return " ".join([lemmatizer.lemmatize(word, wordnet_map.get(pos[0], wordnet.VERB)) for word, pos in pos_tagged_text])
 
