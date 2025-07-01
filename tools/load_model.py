@@ -17,7 +17,7 @@ class BERTClass(torch.nn.Module):
         output_dropout = self.dropout(output.pooler_output)
         return self.linear(output_dropout)  # return raw logits
 
-def load_model(model_path, device, num_labels=19, base_model='bert-base-uncased'):
+def load_model(model_path, device = 'cuda' if torch.cuda.is_available() else 'cpu', num_labels=19, base_model='bert-base-uncased'):
     tokenizer = AutoTokenizer.from_pretrained(base_model)
 
     model = BERTClass(pretrain_model_name=base_model, num_labels=num_labels)
