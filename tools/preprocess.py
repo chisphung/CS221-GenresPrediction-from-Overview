@@ -137,6 +137,6 @@ if __name__ == "__main__":
       df_trimmed = pl.DataFrame(kept_rows)
       return df_trimmed
 
-df_trimmed = trim_dataset(df_train, max_per_genre = 20000, preserve_labels=['War', 'History', 'Western'])
+df_trimmed = trim_dataset(df_preprocessed, max_per_genre = 20000, preserve_labels=['War', 'History', 'Western'])
 df_trimmed.write_csv("datasets/trimmed_dataset.csv")
 
