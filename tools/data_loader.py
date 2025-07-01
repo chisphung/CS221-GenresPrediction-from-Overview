@@ -5,7 +5,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import polars as pl
 import json
 
-genres = json.load(open('./datasets/id2genre.json', 'r'))
+genres = json.load(open('./datasets/id2genre_bert_uncased.json', 'r'))
 
 class CustomDataset(torch.utils.data.Dataset):
     def __init__(self, df, tokenizer, max_len, target_list):

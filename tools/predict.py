@@ -5,18 +5,18 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 import sys
 from tools.load_model import load_model
 from tools.data_loader import get_data_loader
+from tools.postprocess import post_process
 import pandas as pd
 import json 
 
-genres = json.load(open('./datasets/id2genre.json', 'r'))
 
-def get_predictions(model, data_loader, device="cuda" if torch.cuda.is_available() else "cpu"):
+def get_predictions(model, data_loader, target_list_path, device="cuda" if torch.cuda.is_available() else "cpu"):
     """
     Outputs:
       predictions - 
     """
     model = model.eval()
-    
+    genres = json.load(open(target_list_path, 'r'))
     titles = []
     predictions = []
     prediction_probs = []
@@ -49,27 +49,30 @@ def get_predictions(model, data_loader, device="cuda" if torch.cuda.is_available
     return titles, predictions, prediction_probs, target_values
 
 if __name__ == "__main__":
-  if len(sys.argv) < 3:
-       print("Usage: python predict.py <model_path> <data>")
+  if len(sys.argv) < 4:
+       print("Usage: python predict.py <model_path> <data> <target_list_path>")
        sys.exit(1)
 
   model_path = sys.argv[1]
   data = sys.argv[2]
+  target_list_path = sys.argv[3]
+  genres = json.load(open(target_list_path, 'r'))
 
   model, tokenizer = load_model(model_path)
   data_loader = get_data_loader(data, tokenizer)
 
-  titles, predictions, prediction_probs, target_values = get_predictions(model, data_loader)
+  titles, predictions, prediction_probs, target_values = get_predictions(model, data_loader, target_list_path=target_list_path)
+  print(prediction_probs)
+  final_predictions = post_process(prediction_probs)
   print("Predictions completed.")
-  print(f"Predictions: {predictions}")
-  for index, pred in enumerate(predictions):
+  print(f"Predictions: {final_predictions}")
+  for index, pred in enumerate(final_predictions):
      print(f"Sample {index + 1}:")
      result = []
      for genre_index, genre in enumerate(pred):
         if genre == 1:
            result.append(genres[str(genre_index)])
      print(result)
-           
-        
+
 
    # Process and save the predictions as needed
