@@ -14,6 +14,7 @@ import polars as pl
 import sys, os
 import tqdm.auto as tq
 from collections import defaultdict
+import json
 
 # wandb.login(key=wandb_token())
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
@@ -44,9 +45,11 @@ val_df, test_df = train_test_split(test_df, test_size = 2/3)
 # test_df  = test_df.to_numpy()
 # val_df = val_df.to_numpy()
 
-target_list = list(df.columns)
-target_list = target_list[1:]
-print(target_list)
+genres = json.load(open('./datasets/id2genre_distillBERT.json', 'r'))
+target_list = list(genres.values())
+# target_list = list(df.columns)
+# target_list = target_list[1:]
+# print(target_list)
 
 
 def compute_pos_weight(df_labels: pl.DataFrame) -> torch.Tensor:
@@ -110,7 +113,7 @@ def train_model(training_loader, model, optimizer):
         targets = data['targets'].to(device, dtype = torch.float)
 
         # forward
-        outputs = model(ids, mask, token_type_ids) # (batch,predict)=(32,8)
+        outputs = model(ids, mask, token_type_ids) 
         loss = loss_fn(outputs, targets)
         losses.append(loss.item())
         # training accuracy, apply sigmoid, round (apply thresh 0.5)
@@ -125,10 +128,6 @@ def train_model(training_loader, model, optimizer):
         nn.utils.clip_grad_norm_(model.parameters(), max_norm=1.0)
         # grad descent step
         optimizer.step()
-
-        # Update progress bar
-        #loop.set_description(f"")
-        #loop.set_postfix(batch_loss=loss)
 
     # returning: trained model, model accuracy, mean loss
     return model, float(correct_predictions)/num_samples, np.mean(losses)
@@ -223,11 +222,10 @@ if __name__ == "__main__":
         save_total_limit=2,
         report_to="wandb", 
         logging_dir="./logs",
-        eval_strategy="steps",  # or "epoch"
-        # eval_steps=500,  # << adjust based on your dataset size
-        load_best_model_at_end=True,  # really useful with early stopping
-        metric_for_best_model="f1_macro",  # or "f1", "loss", etc. depending on your metric
-        greater_is_better=True,  # set to False if you're minimizing (like loss)
+        eval_strategy="steps",  
+        load_best_model_at_end=True, 
+        metric_for_best_model="f1_macro",  
+        greater_is_better=True,
     )
     
     model = BERTClass()
