@@ -46,6 +46,7 @@ val_df, test_df = train_test_split(test_df, test_size = 2/3)
 
 target_list = list(df.columns)
 target_list = target_list[1:]
+print(target_list)
 
 
 def compute_pos_weight(df_labels: pl.DataFrame) -> torch.Tensor:
