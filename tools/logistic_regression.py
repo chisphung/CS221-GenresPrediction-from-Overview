@@ -1,35 +1,26 @@
 import polars as pl
 import joblib
+import numpy as np
 from sklearn.linear_model import LogisticRegression
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
-from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
 
 if __name__ == "__main__":
-
     df = pl.read_csv("datasets/train.csv")
-    df = df.filter(~(pl.col('genres').is_null() | pl.col('overview').is_null()))
-    df = df.select(['overview', 'genres'])
+    df = df.filter(~pl.col("overview").is_null())
+    overview = df["overview"].to_list()
 
-    df = df.copy()
-    labels = df.iloc[:, 1:-1].values
-    df['labels'] = list(labels)
+    # Label columns are all columns from 'Comedy' 
+    label_cols = df.columns[df.columns.index("Comedy"):]
+    labels = df.select(label_cols).to_numpy()
 
-    corpus = list(df['overview'].dropna())
     tfidf = TfidfVectorizer()
-    vectors = tfidf.fit_transform(corpus).toarray()
+    X = tfidf.fit_transform(overview).toarray()
+    X_train, X_test, y_train, y_test = train_test_split(X, labels, test_size=0.2, random_state=42)
+    model = MultiOutputClassifier(LogisticRegression(max_iter=1000))
+    model.fit(X_train, y_train)
 
-    df['overview'] = list(vectors)
-    df = df.loc[:, ['overview','labels']]
 
-    TEST_SIZE = 0.2
-    split_idx = int(TEST_SIZE * len(vectors))
-    Trainvecs = vectors[:split_idx]
-    Testvecs = vectors[split_idx:]
-    Trainclss = labels[:split_idx]
-    Testclss = labels[split_idx:]
-
-    cls = MultiOutputClassifier(LogisticRegression())
-    cls.fit(Trainvecs, Trainclss)
-
-    joblib.dump(cls, './weights/logistic_regression_model.joblib')
+    joblib.dump(model, "./weights/logistic_regression_model.joblib")
+    joblib.dump(tfidf, "./weights/tfidf_vectorizer.joblib")
