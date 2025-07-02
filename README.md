@@ -43,21 +43,27 @@ You can also download the preprocessed dataset with the following command:
 python tools/download.py
 ```
 ### Model training:
-To train the model, run the following command:
+To train the BERT models, run the following command:
 ```bash
 python tools/train.py <pretrained_model_name> <dataset_path>
 ```
 Replace `<pretrained_model_name>` with the name of the pretrained model you want to use (e.g., `bert-base-uncased`) and `<dataset_path>` with the path to your dataset.
+### Evaluation:
+To evaluate the model, run the following command:
+```bash
+python -m src.evaluate.py
+```
+Modify the target list path and weights path to match your setup
 ### Pretrained model:
 To save your time, we are current support 3 pretrained models:
-- `bert-base-uncased`
-- `distilled-bert-base-uncased`
-- `roberta-base`
+- `bert-base-uncased` trained on preprocessded + undersampled dataset
+- `distilled-bert-base-uncased` trained on preprocessded dataset
+- `bert-base-cased` trained on raw + undersampled dataset
 
 You can download them from the following links:
 - [bert-base-uncased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
 - [distilled-bert-base-uncased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
-- [roberta-base](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
+- [bert-base-cased](https://drive.google.com/drive/u/0/folders/1VMI2n7ZvDL6YL5iVGRI3dTr3aJdzDVek)
 
 After downloading, you can place them in the `weights` folder.
 ### Prediction:
