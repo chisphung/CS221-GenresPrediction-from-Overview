@@ -3,6 +3,7 @@ import torch.nn as nn
 from torch.optim import AdamW
 from torch.utils.data import Dataset
 import numpy as np 
+import matplotlib.pyplot as plt
 from transformers import AutoTokenizer
 from transformers import TrainingArguments
 from transformers import BertModel
@@ -160,7 +161,7 @@ def eval_model(validation_loader, model, optimizer):
 
                 # Subset accuracy (all labels correct per sample)
             subset_correct += np.sum(np.all(outputs == targets, axis=1))
-        subset_acc = float(subset_correct) / num_samples
+        subset_acc = float(subset_correct) / len(validation_loader.dataset)
 
     return float(correct_predictions)/num_samples, np.mean(losses), subset_acc
 
@@ -207,25 +208,6 @@ if __name__ == "__main__":
         batch_size=TEST_BATCH_SIZE,
         shuffle=False,
         num_workers=0
-    )
-        
-    training_args = TrainingArguments(
-        output_dir="out_dir",
-        learning_rate=2e-5,
-        per_device_train_batch_size=16,
-        per_device_eval_batch_size=16,
-        num_train_epochs=10,
-        weight_decay=0.01,
-        eval_steps=100,
-        save_steps=100,
-        logging_steps=100,
-        save_total_limit=2,
-        report_to="wandb", 
-        logging_dir="./logs",
-        eval_strategy="steps",  
-        load_best_model_at_end=True, 
-        metric_for_best_model="f1_macro",  
-        greater_is_better=True,
     )
     
     model = BERTClass()

@@ -3,6 +3,7 @@ from tools.data_loader import get_data_loader
 from tools.load_model import load_model
 from tools.postprocess import post_process
 from sklearn.metrics import f1_score, jaccard_score, hamming_loss, classification_report
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import json
 import torch
 import polars as pl
@@ -31,6 +32,13 @@ def evaluate(model_path, df, target_list_path, base_model = "bert-base-uncased",
     f1_score_value = f1_score(test_labels, predictions, average='micro')
     jaccard_score_value = jaccard_score(test_labels, predictions, average='samples')
     hamming_loss_value = hamming_loss(test_labels, predictions)
+    # Save predictions results
+    json.dump({
+        "titles": titles,
+        "predictions": predictions.tolist(),
+        "prediction_probs": prediction_probs.tolist(),
+        "targets": target_values.tolist()
+    }, open("predictions.json", "w"), indent=4)
 
     return f1_score_value, jaccard_score_value, hamming_loss_value
 
