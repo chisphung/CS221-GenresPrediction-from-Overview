@@ -2,7 +2,7 @@ from tools.predict import get_predictions
 from tools.data_loader import get_data_loader
 from tools.load_model import load_model
 from tools.postprocess import post_process
-from tools.ensemble import ensemble_predict
+from tools.ensemble import ensemble_predict, ensemble_predict_batch
 from sklearn.metrics import f1_score, jaccard_score, hamming_loss, classification_report
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import json
