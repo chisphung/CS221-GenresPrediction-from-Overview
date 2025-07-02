@@ -7,14 +7,6 @@ import json
 import numpy as np
 from pathlib import Path
 
-path = Path("datasets") / "id2genre.json"
-with open(path, "r") as f:
-    id2genre = json.load(f)
-
-model_path = r'./weights/bert_based.pt'
-device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
-model, tokenizer = load_model(model_path, device)
-
 def single_predict(model, tokenizer, text, device, max_length=180, threshold=0.5):
     model.eval()
     inputs = tokenizer(
@@ -39,6 +31,13 @@ def single_predict(model, tokenizer, text, device, max_length=180, threshold=0.5
 
 
 if __name__ == "__main__":
+    path = Path("datasets") / "id2genre_bert_cased.json"
+    with open(path, "r") as f:
+        id2genre = json.load(f)
+
+    model_path = r'./weights/bert_cased.pt'
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    model, tokenizer = load_model(model_path, device, num_labels=len(id2genre), base_model='bert-base-cased')
     text ="Earth's mightiest heroes must come together and learn to fight as a team if they are going to stop the mischievous Loki and his alien army from enslaving humanity."
     predictions, probabilities = single_predict(model, tokenizer, text, device)
     pred_indices = np.where(predictions[0] == 1)[0]
