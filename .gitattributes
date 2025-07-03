@@ -1,2 +1,0 @@
-*.json filter=lfs diff=lfs merge=lfs -text
-distilledBERT_test_predictions.json filter=lfs diff=lfs merge=lfs -text

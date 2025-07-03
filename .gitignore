@@ -212,4 +212,4 @@ __marimo__/
 *.pt
 # dataset files
 *.csv
-
+*.json

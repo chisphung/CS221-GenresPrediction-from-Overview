@@ -45,13 +45,13 @@ python tools/download.py
 ### Model training:
 To train the BERT models, run the following command:
 ```bash
-python tools/train.py <pretrained_model_name> <dataset_path>
+python - m tools.train <pretrained_model_name> <dataset_path>
 ```
 Replace `<pretrained_model_name>` with the name of the pretrained model you want to use (e.g., `bert-base-uncased`) and `<dataset_path>` with the path to your dataset.
 ### Evaluation:
 To evaluate the model, run the following command:
 ```bash
-python -m src.evaluate.py
+python -m src.evaluate
 ```
 Modify the target list path and weights path to match your setup
 ### Pretrained model:
@@ -69,10 +69,10 @@ After downloading, you can place them in the `weights` folder.
 ### Prediction:
 To make a single prediction using the trained model, run the following command:
 ```bash
-python -m src.main.py 
+python -m src.main
 ```
 ### Deployment:
 To deploy the model using streamlit, run the following command:
 ```bash
-streamlit run src/streamlit.py
+streamlit run src/app.py
 ```

@@ -1,3 +1,21 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:7bed4c5176ae07e5b3cf25836d8f8f2206c2ab09d614b846b26807aa2a23fbae
-size 396
+{
+    "0": "Horror",
+    "1": "Thriller",
+    "2": "Music",
+    "3": "History",
+    "4": "Western",
+    "5": "Romance",
+    "6": "Crime",
+    "7": "Action",
+    "8": "War",
+    "9": "Mystery",
+    "10": "Science Fiction",
+    "11": "Documentary",
+    "12": "TV Movie",
+    "13": "Animation",
+    "14": "Fantasy",
+    "15": "Comedy",
+    "16": "Adventure",
+    "17": "Family",
+    "18": "Drama"
+}
