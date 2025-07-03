@@ -1,2 +1,3 @@
-
-{"repos": [{"repoId": "bert-base-uncased", "repoType": "model", "commitHash": "86b5e0934494bd15c9632b12f734a8a67f723594"}]}
+version https://git-lfs.github.com/spec/v1
+oid sha256:17d94969bbf16acb9423ceb1cab95ad201ac0d093e2072253f24b94db1851b5b
+size 124
