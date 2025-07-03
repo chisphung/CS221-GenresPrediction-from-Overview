@@ -6,7 +6,7 @@
 </p>
 
 <!-- Title -->
-<h1 align="center"><b>Multiclass Movie Genres Classification From Original Movie Overview</b></h1>
+<h1 align="center"><b>Multi-label Movie Genres Classification From Original Movie Overview</b></h1>
 <!-- Main -->
 
 ## Members
