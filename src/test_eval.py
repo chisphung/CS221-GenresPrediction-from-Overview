@@ -1,5 +1,6 @@
 from tools.eval import evaluate
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import polars as pl 
 import json
 
